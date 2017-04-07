@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    compile "com.datastax.cassandra:cassandra-driver-core:$datastaxVersion"
+}
+
+
