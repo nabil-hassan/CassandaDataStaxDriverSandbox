@@ -1,4 +1,4 @@
-package net.example;
+package net.cassandra;
 
 /**
  * Constants for the property keys found in the application.properties file.

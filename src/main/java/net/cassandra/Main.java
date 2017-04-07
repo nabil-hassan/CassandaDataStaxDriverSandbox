@@ -1,21 +1,19 @@
-package net.example;
+package net.cassandra;
 
-import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.PlainTextAuthProvider;
 import com.datastax.driver.core.Session;
+import net.cassandra.examples.SimpleSelectExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 /**
  * Entry point for application.
  *
- * The various examples can be run by uncommenting the corresponding lines.
+ * The various examples can be run/not run, by commenting out appropriate lines.
  *
  * Before running this code, you must have installed and configured Cassandra, and created the 'DEMO' keyspace,
  * by running the CQL commands found in file: 'src/main/resources/create-demo-keyspace' against your
@@ -30,6 +28,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // initialise the Cassandra cluster.
         initialiseCluster();
+
+        // run the very basic select example
+        SimpleSelectExample sse = new SimpleSelectExample(cluster);
+        sse.run();
+
+        // close the cluster now all work complete
+        cluster.close();
     }
 
     public static void initialiseCluster() throws IOException {
@@ -66,9 +71,6 @@ public class Main {
             builder.withCredentials(username, password);
         }
         cluster = builder.build();
-        Session session = cluster.connect();
-        session.close();
-        cluster.close();
     }
 
 }
