@@ -1,8 +1,10 @@
 package net.cassandra;
 
 import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.PagingState;
 import com.datastax.driver.core.Session;
 import net.cassandra.examples.AsyncSelectExample;
+import net.cassandra.examples.PagingSelectExample;
 import net.cassandra.examples.PreparedStatementSelectExample;
 import net.cassandra.examples.SimpleSelectExample;
 import org.slf4j.Logger;
@@ -37,13 +39,19 @@ public class Main {
         SimpleSelectExample sse = new SimpleSelectExample(cluster);
         sse.run();
 
-        // Run the asynchronous select example.
-        AsyncSelectExample ase = new AsyncSelectExample(cluster);
-        ase.run();
+        // Run the paged select example
+        PagingSelectExample pge = new PagingSelectExample(cluster);
+        PagingState pgState = pge.run();
+        LOG.info("Retrieving page 2");
+        pge.queryEmployeesPaged(pgState);
 
         // Run the prepared statement select example
         PreparedStatementSelectExample pse = new PreparedStatementSelectExample(cluster);
         pse.run();
+
+        // Run the asynchronous select example.
+        AsyncSelectExample ase = new AsyncSelectExample(cluster);
+        ase.run();
 
         // Bit yucky, but some of the examples are asynchronous, and therefore, should give them
         // some time to complete before closing the cluster.

@@ -3,17 +3,15 @@ package net.cassandra.examples;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
-import net.cassandra.examples.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.util.Objects;
 
 /**
  * Basic example which runs a simple SELECT query against the database, using execute(String).
  */
-public class SimpleSelectExample implements Example {
+public class SimpleSelectExample {
 
     private static final Logger LOG = LoggerFactory.getLogger(SimpleSelectExample.class);
 

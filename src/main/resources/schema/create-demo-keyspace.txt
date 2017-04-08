@@ -32,3 +32,12 @@ VALUES (uuid(), 'US', 'Washington');
 -- verify initial data in 'offices' column family.
 SELECT *
 FROM   offices;
+
+-- create 'employees' column family
+CREATE COLUMNFAMILY employees
+(
+    id   int,
+    name text,
+    role text,
+    PRIMARY KEY(id, name)
+);
