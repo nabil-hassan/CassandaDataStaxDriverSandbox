@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.Objects;
 
 /**
- * Basic cassandra which runs some SELECT statements against the database, using execute(String).
+ * Basic example which runs a simple SELECT query against the database, using execute(String).
  */
 public class SimpleSelectExample implements Example {
 
@@ -32,5 +32,4 @@ public class SimpleSelectExample implements Example {
         });
         session.close();
     }
-
 }

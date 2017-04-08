@@ -2,6 +2,8 @@ package net.cassandra;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import net.cassandra.examples.AsyncSelectExample;
+import net.cassandra.examples.PreparedStatementSelectExample;
 import net.cassandra.examples.SimpleSelectExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Entry point for application.
@@ -26,15 +30,31 @@ public class Main {
     private static Cluster cluster;
 
     public static void main(String[] args) throws Exception {
-        // initialise the Cassandra cluster.
+        // Initialise the Cassandra cluster.
         initialiseCluster();
 
-        // run the very basic select example
+        // Run the very basic select example
         SimpleSelectExample sse = new SimpleSelectExample(cluster);
         sse.run();
 
-        // close the cluster now all work complete
-        cluster.close();
+        // Run the asynchronous select example.
+        AsyncSelectExample ase = new AsyncSelectExample(cluster);
+        ase.run();
+
+        // Run the prepared statement select example
+        PreparedStatementSelectExample pse = new PreparedStatementSelectExample(cluster);
+        pse.run();
+
+        // Bit yucky, but some of the examples are asynchronous, and therefore, should give them
+        // some time to complete before closing the cluster.
+        Timer t = new Timer();
+        TimerTask waitTask = new TimerTask() {
+            @Override public void run() {
+                cluster.close();
+                t.cancel();
+            }
+        };
+        t.schedule(waitTask, 10 * 1000);
     }
 
     public static void initialiseCluster() throws IOException {
