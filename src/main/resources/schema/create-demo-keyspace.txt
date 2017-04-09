@@ -41,3 +41,14 @@ CREATE COLUMNFAMILY employees
     role text,
     PRIMARY KEY(id, name)
 );
+
+-- create 'departments' column family
+CREATE COLUMNFAMILY departments
+(
+    id   uuid,
+    name text,
+    created timestamp,
+    head_count int,
+    capabilities list<text>,
+    PRIMARY KEY(id, name)
+);
