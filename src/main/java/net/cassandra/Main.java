@@ -4,6 +4,7 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PagingState;
 import com.datastax.driver.core.Session;
 import net.cassandra.examples.*;
+import org.apache.cassandra.service.CassandraDaemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,8 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Entry point for application.
@@ -25,6 +28,8 @@ import java.util.TimerTask;
 public class Main {
 
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+
+    private static CassandraDaemon cassandraDaemon;
 
     private static Cluster cluster;
 
