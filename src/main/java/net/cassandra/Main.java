@@ -68,7 +68,7 @@ public class Main {
                 t.cancel();
             }
         };
-        t.schedule(waitTask, 10 * 1000);
+        t.schedule(waitTask, 1 * 1000, 10 * 1000);
     }
 
     public static void initialiseCluster() throws IOException {
@@ -105,6 +105,7 @@ public class Main {
             builder.withCredentials(username, password);
         }
         cluster = builder.build();
+        cluster.init();
     }
 
 }
